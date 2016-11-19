@@ -88,7 +88,7 @@ function scatterplot(data) {
         .attr('x2', 10)
         .attr('y1', 0)
         .attr('y2', 0)
-        .style('stroke', 'darkgray')
+        .style('stroke', 'orange')
         .style('stroke-width', '4px');
     });
 }
