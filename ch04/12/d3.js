@@ -40,10 +40,10 @@ function lineChart(data) {
                         .x(function(d) {
                           return xScale(d.day);
                         })
-                        .y0(function(d) {
+                        .y(function(d) {
                           return yScale( alternatingStacking(d, x, 'top') );
                         })
-                        .y1(function(d) {
+                        .y0(function(d) {
                           return yScale( alternatingStacking(d, x, 'bottom') );
                         })
                         .curve(d3.curveBasis);
