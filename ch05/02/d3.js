@@ -1,12 +1,14 @@
-d3.json('tweets.json', pieChart);
+d3.json('tweets.json', function(err, data) {
+  drawPieChart(data.tweets);
+});
 
-function pieChart(data) {
+function drawPieChart(data) {
 
   let nestedTweets = d3.nest()
                        .key(function(el) {
                          return el.user;
                        })
-                       .entries(data.tweets);
+                       .entries(data);
 
   nestedTweets.forEach(function(el) {
     el.numTweets = el.values.length;
@@ -20,9 +22,7 @@ function pieChart(data) {
     });
   });
 
-  console.log(nestedTweets);
-
-  let pieChart = d3.pie()
+  let pieChartData = d3.pie()
                    .value(function(d) {
                      return d.numTweets;
                    })(nestedTweets);
@@ -35,7 +35,7 @@ function pieChart(data) {
     .append('g')
     .attr('transform', 'translate(250,250)')
     .selectAll('path')
-    .data(pieChart)
+    .data(pieChartData)
     .enter()
     .append('path')
     .attr('d', newArc)
