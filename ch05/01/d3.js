@@ -37,7 +37,7 @@ function histogram(tweetsData) {
     .attr('height', function(d) {
       return 400 - yScale(d.length);
     })
-    .style('fill', 'darkred')
+    .style('fill', 'pink')
     .style('stroke', 'black')
     .style('stroke-width', '1px');
 

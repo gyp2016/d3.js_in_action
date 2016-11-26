@@ -23,9 +23,9 @@ function drawPieChart(data) {
   });
 
   let pieChartData = d3.pie()
-                   .value(function(d) {
-                     return d.numTweets;
-                   })(nestedTweets);
+                       .value(function(d) {
+                         return d.numTweets;
+                       })(nestedTweets);
 
   let newArc = d3.arc()
                  .innerRadius(20)
