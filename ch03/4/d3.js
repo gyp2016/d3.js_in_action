@@ -62,7 +62,7 @@ function createSoccerViz() {
             ? d3.select(this).classed('active', true)
             : d3.select(this).classed('inactive', true);
         });
-      console.log(this);
+
       this.parentElement.appendChild(this);
     }
 
