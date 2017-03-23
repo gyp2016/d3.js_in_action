@@ -2,7 +2,7 @@ path.countries {
   stroke-width: 1;
   stroke: black;
   opacity: .5;
-  fill: red;
+  fill: darkcyan;
 }
 
 circle.cities {
