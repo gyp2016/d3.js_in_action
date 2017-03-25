@@ -1,4 +1,4 @@
-d3.json("../world.geojson", createMap);
+d3.json("../world.geo.json", createMap);
 
 function createMap(countries) {
   

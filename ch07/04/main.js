@@ -10,10 +10,17 @@ function createMap(countries, cities) {
   var width = 1600;
   var height = 900;
 
-  var projection = d3.geoMercator()
-                      .scale(300)
+  var projection = d3.geoStereographic()
+                      .scale(200)
                       .translate([width / 2, height / 2]);
   var geoPath = d3.geoPath(projection);
+  var featureSize = d3.extent(countries.features, function(d) { return geoPath.area(d); });
+
+  console.log(featureSize)
+
+  var countryColor = d3.scaleQuantize()
+                       .domain(featureSize)
+                       .range(d3.schemeCategory10);
 
   d3.select('svg')
     .selectAll('path')
@@ -21,7 +28,10 @@ function createMap(countries, cities) {
     .enter()
     .append('path')
     .attr('d', geoPath)
-    .style('fill', 'gray');
+    .attr('class', 'countries')
+    .style('fill', function(d) {
+      return countryColor(geoPath.area(d));
+    });
 
   d3.select('svg')
     .selectAll('circle')
