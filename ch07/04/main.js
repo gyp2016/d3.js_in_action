@@ -10,9 +10,9 @@ function createMap(countries, cities) {
   var width = 1600;
   var height = 900;
 
-  var projection = d3.geoStereographic()
-                      .scale(200)
-                      .translate([width / 2, height / 2]);
+  var projection = d3.geoMollweide()
+                     .scale(200)
+                     .translate([width / 2, height / 2]);
   var geoPath = d3.geoPath(projection);
   var featureSize = d3.extent(countries.features, function(d) { return geoPath.area(d); });
   var countryColor = d3.scaleQuantize()

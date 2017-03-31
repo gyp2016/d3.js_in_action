@@ -33,8 +33,30 @@ function createMap(countries, cities) {
     .attr('class', 'cities')
     .attr('r', 3)
     .attr('cx', function(d) { return projection([d.x, d.y])[0]; })
-    .attr('cy', function(d) { return projection([d.x, d.y])[1]; })
+    .attr('cy', function(d) { return projection([d.x, d.y])[1]; });
 
+  // graticule 경위선망
+  var graticule = d3.geoGraticule();
+
+  d3.select('svg')
+    .append('path')
+    .datum(graticule)
+    .attr('class', 'graticule line')
+    .attr('d', geoPath)
+    .style('fill', 'none')
+    .style('stroke', 'lightgray')
+    .style('stroke-width', '1px');
+  
+  d3.select('svg')
+    .append('path')
+    .datum(graticule.outline)
+    .attr('class', 'graticule outline')
+    .attr('d', geoPath)
+    .style('fill', 'none')
+    .style('stroke', 'black')
+    .style('stroke-width', '1px');
+
+  // MouseEvent 상호작용성
   d3.selectAll('path.countries')
     .on('mouseover', centerBounds)
     .on('mouseout', clearCenterBounds);
