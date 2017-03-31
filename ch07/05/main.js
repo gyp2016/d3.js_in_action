@@ -10,14 +10,14 @@ function createMap(countries, cities) {
   var width = 1600;
   var height = 900;
 
-  var projection = d3.geoStereographic()
-                      .scale(200)
+  var projection = d3.geoMercator()
+                      .scale(300)
                       .translate([width / 2, height / 2]);
   var geoPath = d3.geoPath(projection);
   var featureSize = d3.extent(countries.features, function(d) { return geoPath.area(d); });
   var countryColor = d3.scaleQuantize()
                        .domain(featureSize)
-                       .range(d3.schemeCategory10);
+                       .range(d3.interpolateMagma);
 
   d3.select('svg')
     .selectAll('path')
@@ -40,4 +40,5 @@ function createMap(countries, cities) {
     .attr('r', 3)
     .attr('cx', function(d) { return projection([d.x, d.y])[0]; })
     .attr('cy', function(d) { return projection([d.x, d.y])[1]; });
+
 };
