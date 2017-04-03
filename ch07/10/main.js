@@ -66,6 +66,35 @@ function createMap(countries, cities) {
     .call(mapZoom)
     .call(mapZoom.transform, zoomSettings);
 
+  function zoomButton(zoomDirection) {
+    var width = 1600;
+    var height = 900;
+    if (zoomDirection == "in") {
+      var newZoom = projection.scale() * 1.5;
+      var newX = ((projection.translate()[0] - (width / 2)) * 1.5) + width / 2;
+      var newY = ((projection.translate()[1] - (height / 2)) * 1.5) + height / 2;
+    }
+    else if (zoomDirection == "out") {
+      var newZoom = projection.scale() * .75;
+      var newX = ((projection.translate()[0] - (width / 2)) * .75) + width / 2;
+      var newY = ((projection.translate()[1] - (height / 2)) * .75) + height / 2;
+    }
+    var newZoomSettings = d3.zoomIdentity
+                            .translate(newX, newY)
+                            .scale(newZoom);
+    d3.select('svg')
+      .transition()
+      .duration(500)
+      .call(mapZoom.transform, newZoomSettings);
+  }
+
+  d3.select('#controls')
+    .append('button')
+       .on('click', () => { zoomButton('in')}).html('Zoom In');
+  d3.select('#controls')
+    .append('button')
+      .on('click', () => { zoomButton('out')}).html('Zoom Out');
+
   function zoomed() {
     projection.translate([d3.event.transform.x, d3.event.transform.y])
               .scale(d3.event.transform.k);
