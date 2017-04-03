@@ -41,11 +41,50 @@ function createMap(countries, cities) {
       .attr('cx', d => projection([d.x, d.y])[0])
       .attr('cy', d => projection([d.x, d.y])[1]);
 
+  // graticule 경위선망
+  var graticule = d3.geoGraticule();
+
+  d3.select('svg')
+    .insert('path', 'path.countries')
+      .datum(graticule)
+      .attr('class', 'graticule line')
+      .attr('d', geoPath);
+  
+  d3.select('svg')
+    .insert('path', 'path.countries')
+      .datum(graticule.outline)
+      .attr('class', 'graticule outline')
+      .attr('d', geoPath);
+
+  // 지도 확대
+  var mapZoom = d3.zoom()
+                  .on('zoom', zoomed);
+  var zoomSettings = d3.zoomIdentity
+                       .translate(800, 450)
+                       .scale(300);
+  d3.select('svg')
+    .call(mapZoom)
+    .call(mapZoom.transform, zoomSettings);
+
+  function zoomed() {
+    projection.translate([d3.event.transform.x, d3.event.transform.y])
+              .scale(d3.event.transform.k);
+
+    d3.selectAll('path.graticule')
+      .attr('d', geoPath);
+    d3.selectAll('path.countries')
+      .attr('d', geoPath);
+    d3.selectAll('circle.cities')
+      .attr('cx', d => projection([d.x, d.y])[0])
+      .attr('cy', d => projection([d.x, d.y])[1]);
+  }
+
+  // MouseEvent 상호작용성
   d3.selectAll('path.countries')
       .on('mouseover', centerBounds)
       .on('mouseout', clearCenterBounds);
 
-  function centerBounds(d) {
+  function centerBounds(d, i) {
     var thisBounds = geoPath.bounds(d);
     var thisCenter = geoPath.centroid(d);
 
