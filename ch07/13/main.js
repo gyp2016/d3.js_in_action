@@ -50,14 +50,14 @@ function createMap(countries, cities) {
   d3.select('svg')
     .insert('path', 'path.countries')
     .datum(graticule)
-    .attr('class', 'graticule line')
-    .attr('d', geoPath);
+      .attr('class', 'graticule line')
+      .attr('d', geoPath);
 
   d3.select('svg')
     .insert('path', 'path.countries')
     .datum(graticule.outline)
-    .attr('class', 'graticule outline')
-    .attr('d', geoPath);
+      .attr('class', 'graticule outline')
+      .attr('d', geoPath);
 
   var rotateScale = d3.scaleLinear()
                       .domain([-500, 0, 500])
