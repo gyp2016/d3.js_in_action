@@ -31,6 +31,8 @@ function createMap(countries, cities) {
     .append('path')
       .attr('d', geoPath)
       .attr('class', 'countries')
+      .style('fill', d => countryColor(geoPath.area(d)))
+      .style('stroke', d => d3.rgb(countryColor(geoPath.area(d))).darker());
   
   d3.select('svg')
     .selectAll('cities')
