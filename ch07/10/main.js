@@ -90,10 +90,10 @@ function createMap(countries, cities) {
 
   d3.select('#controls')
     .append('button')
-       .on('click', () => { zoomButton('in')}).html('Zoom In');
+    .on('click', () => { zoomButton('in')}).html('Zoom In');
   d3.select('#controls')
     .append('button')
-      .on('click', () => { zoomButton('out')}).html('Zoom Out');
+    .on('click', () => { zoomButton('out')}).html('Zoom Out');
 
   function zoomed() {
     projection.translate([d3.event.transform.x, d3.event.transform.y])
