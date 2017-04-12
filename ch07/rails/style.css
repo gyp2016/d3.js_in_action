@@ -43,3 +43,8 @@ path.merged {
   stroke: #4F442B;
   stroke-width: 2px;
 }
+
+line.rail {
+  stroke: #b1a98d;
+  stroke-width: 3px;
+}

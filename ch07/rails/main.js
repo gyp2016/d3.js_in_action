@@ -14,8 +14,8 @@ function createMap(topoCountries, cities) {
   var height = 700;
   var countries = topojson.feature(topoCountries, topoCountries.objects.countries);
   var projection = d3.geoMercator()
-                     .translate([800, 450])
-                     .scale(400);
+                     .translate([500, 450])
+                     .scale(1500);
   var geoPath = d3.geoPath(projection);
 
   d3.select('svg')
@@ -27,39 +27,38 @@ function createMap(topoCountries, cities) {
       .attr('class', 'countries');
 
   // Connects
-  // var tempRoad = [];
-  // cities.content.forEach( station => {
-  //   var destinations = station.connectsTo.split(", ");
-  //   destinations.forEach( descName => {
-  //     var overlap = _.find(tempRoad, road => road.start == descName && road.end == station.city);
-  //     if (!overlap) {
-  //       var destination = _.find(cities.content, station => station.city == descName);
-  //       if (destination) {
-  //         var road = {
-  //           start: station.city,
-  //           x1: station.longitude,
-  //           y1: station.latitude,
-  //           end: destination.city,
-  //           x2: destination.longitude,
-  //           y2: destination.latitude
-  //         };
-  //         tempRoad.push(road);
-  //       }
-  //     }
-  //   });
-  // });
+  var tempRoad = [];
+  cities.content.forEach( station => {
+    var destinations = station.connectsTo.split(", ");
+    destinations.forEach( descName => {
+      var overlap = _.find(tempRoad, road => road.start == descName && road.end == station.city);
+      if (!overlap) {
+        var destination = _.find(cities.content, station => station.city == descName);
+        if (destination) {
+          var road = {
+            start: station.city,
+            x1: station.longitude,
+            y1: station.latitude,
+            end: destination.city,
+            x2: destination.longitude,
+            y2: destination.latitude
+          };
+          tempRoad.push(road);
+        }
+      }
+    });
+  });
 
-  // d3.select('svg')
-  //   .selectAll('line')
-  //   .data(tempRoad)
-  //   .enter()
-  //   .append('line')
-  //   .attr('x1', d => projection([d.x1, d.y1])[0])
-  //   .attr('y1', d => projection([d.x1, d.y1])[1])
-  //   .attr('x2', d => projection([d.x2, d.y2])[0])
-  //   .attr('y2', d => projection([d.x2, d.y2])[1])
-  //     .style('stroke', '#3d330f')
-  //     .style('stroke-width', '3px');
+  d3.select('svg')
+    .selectAll('line')
+    .data(tempRoad)
+    .enter()
+    .append('line')
+      .attr('class', 'rail')
+      .attr('x1', d => projection([d.x1, d.y1])[0])
+      .attr('y1', d => projection([d.x1, d.y1])[1])
+      .attr('x2', d => projection([d.x2, d.y2])[0])
+      .attr('y2', d => projection([d.x2, d.y2])[1]);
 
   // Stations
   d3.select('svg')
@@ -68,7 +67,7 @@ function createMap(topoCountries, cities) {
     .enter()
     .append('circle')
       .attr('class', 'cities')
-      .attr('r', 5)
+      .attr('r', 7)
       .attr('cx', d => projection([d.longitude, d.latitude])[0])
       .attr('cy', d => projection([d.longitude, d.latitude])[1])
       .on('click', selectedCity)
@@ -84,8 +83,6 @@ function createMap(topoCountries, cities) {
 
     d3.select(this)
       .classed('active', true);
-
-    console.log(d3.values(d));
 
     d3.selectAll('td.data')
       .data(d3.values(d))
@@ -119,8 +116,8 @@ function createMap(topoCountries, cities) {
                   .scaleExtent([400, 1600])
                   .on('zoom', zoomed);
   var zoomSettings = d3.zoomIdentity
-                       .translate(800, 450)
-                       .scale(400);
+                       .translate(1800, 1000)
+                       .scale(900);
   d3.select('svg')
     .call(mapZoom)
     .call(mapZoom.transform, zoomSettings)
@@ -128,7 +125,6 @@ function createMap(topoCountries, cities) {
     .on('dblclick.zoom', null);
 
   function zoomed() {
-    console.log('zoomed start');
     projection.translate([d3.event.transform.x, d3.event.transform.y])
               .scale(d3.event.transform.k);
 
@@ -138,7 +134,12 @@ function createMap(topoCountries, cities) {
     d3.selectAll('circle.cities')
       .attr('cx', d => projection([d.longitude, d.latitude])[0])
       .attr('cy', d => projection([d.longitude, d.latitude])[1]);
-    console.log('zoomed end');
+
+    d3.selectAll('line.rail')
+      .attr('x1', d => projection([d.x1, d.y1])[0])
+      .attr('y1', d => projection([d.x1, d.y1])[1])
+      .attr('x2', d => projection([d.x2, d.y2])[0])
+      .attr('y2', d => projection([d.x2, d.y2])[1]);
   }
 
   d3.select('div.controls')

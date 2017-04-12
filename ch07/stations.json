@@ -1336,8 +1336,8 @@
       "currentAmountDemanded": 0,
       "currentResourceDemanded": false,
       "currentLevel": 0,
-      "latitude": 45.26704185,
-      "longitude": -66.07667505
+      "latitude": 47.8,
+      "longitude": -53.5
     },
     {
       "city": "Halifax",
@@ -1366,8 +1366,8 @@
       "currentAmountDemanded": 0,
       "currentResourceDemanded": false,
       "currentLevel": 0,
-      "latitude": 45.94999758,
-      "longitude": -66.63330774
+      "latitude": 45.9,
+      "longitude": -66.6
     },
     {
       "city": "Sherbrooke",
@@ -1381,8 +1381,8 @@
       "currentAmountDemanded": 0,
       "currentResourceDemanded": false,
       "currentLevel": 0,
-      "latitude": 45.40000531,
-      "longitude": -71.89998885
+      "latitude": 45.9,
+      "longitude": -71.8
     },
     {
       "city": "Kingston",
@@ -1456,8 +1456,8 @@
       "currentAmountDemanded": 0,
       "currentResourceDemanded": false,
       "currentLevel": 0,
-      "latitude": 45.49999921,
-      "longitude": -73.58329696
+      "latitude": 46.2,
+      "longitude": -73.5
     },
     {
       "city": "Edmundston",
